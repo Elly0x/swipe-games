@@ -7,7 +7,9 @@
    ============================================================ */
 
 const CONFIG = {
-  // Cole aqui sua chave gratuita de https://rawg.io/apidocs
+  // Proxy que busca dados direto da Steam (contorna o bloqueio de CORS)
+  STEAM_PROXY_URL: 'https://swipe-games-proxy.sjanaylle.workers.dev/',
+  // Alternativa: cole aqui sua chave gratuita de https://rawg.io/apidocs
   RAWG_API_KEY: '',
   RAWG_ENDPOINT: 'https://api.rawg.io/api/games',
   PAGE_SIZE: 20,
@@ -81,41 +83,72 @@ async function loadGames() {
   apiStatusEl.textContent = '● connecting…';
   apiStatusEl.className = 'winbar__status';
 
-  if (!CONFIG.RAWG_API_KEY) {
-    apiStatusEl.textContent = '● sem chave · catálogo local';
-    modeLabelEl.textContent = 'modo: catálogo local (defina RAWG_API_KEY em script.js)';
-    return normalize(FALLBACK_GAMES, 'local');
+  if (CONFIG.STEAM_PROXY_URL) {
+    try {
+      const res = await fetch(CONFIG.STEAM_PROXY_URL);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) throw new Error('resposta vazia');
+      apiStatusEl.textContent = '● online · steam';
+      apiStatusEl.classList.add('is-ready');
+      modeLabelEl.textContent = 'modo: Steam (via proxy)';
+      return normalize(data, 'steam');
+    } catch (err) {
+      log(`erro ao buscar proxy Steam: ${err.message} — tentando alternativa`, 'sys');
+    }
   }
 
-  try {
-    const url = `${CONFIG.RAWG_ENDPOINT}?key=${CONFIG.RAWG_API_KEY}&ordering=-added&page_size=${CONFIG.PAGE_SIZE}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    apiStatusEl.textContent = '● online · rawg.io';
-    apiStatusEl.classList.add('is-ready');
-    modeLabelEl.textContent = 'modo: RAWG API (trending)';
-    return normalize(data.results, 'rawg');
-  } catch (err) {
-    apiStatusEl.textContent = '● falha na API · fallback local';
-    apiStatusEl.classList.add('is-error');
-    modeLabelEl.textContent = 'modo: catálogo local (falha ao buscar RAWG)';
-    log(`erro ao buscar RAWG API: ${err.message} — usando catálogo local`, 'sys');
-    return normalize(FALLBACK_GAMES, 'local');
+  if (CONFIG.RAWG_API_KEY) {
+    try {
+      const url = `${CONFIG.RAWG_ENDPOINT}?key=${CONFIG.RAWG_API_KEY}&ordering=-added&page_size=${CONFIG.PAGE_SIZE}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      apiStatusEl.textContent = '● online · rawg.io';
+      apiStatusEl.classList.add('is-ready');
+      modeLabelEl.textContent = 'modo: RAWG API (trending)';
+      return normalize(data.results, 'rawg');
+    } catch (err) {
+      apiStatusEl.textContent = '● falha na API · fallback local';
+      apiStatusEl.classList.add('is-error');
+      modeLabelEl.textContent = 'modo: catálogo local (falha ao buscar RAWG)';
+      log(`erro ao buscar RAWG API: ${err.message} — usando catálogo local`, 'sys');
+      return normalize(FALLBACK_GAMES, 'local');
+    }
   }
+
+  apiStatusEl.textContent = '● sem fonte externa · catálogo local';
+  apiStatusEl.classList.add('is-error');
+  modeLabelEl.textContent = 'modo: catálogo local (nenhuma API configurada)';
+  return normalize(FALLBACK_GAMES, 'local');
 }
 
 function normalize(list, source) {
   const seen = new Set(load(STORAGE_KEYS.seen, []));
   return list
-    .map(g => source === 'rawg' ? {
-      id: String(g.id),
-      name: g.name,
-      released: (g.released || '').slice(0, 4) || '—',
-      rating: g.rating || 0,
-      genres: (g.genres || []).map(x => x.name).slice(0, 3),
-      image: g.background_image || '',
-    } : g)
+    .map(g => {
+      if (source === 'rawg') {
+        return {
+          id: String(g.id),
+          name: g.name,
+          released: (g.released || '').slice(0, 4) || '—',
+          rating: g.rating || 0,
+          genres: (g.genres || []).map(x => x.name).slice(0, 3),
+          image: g.background_image || '',
+        };
+      }
+      if (source === 'steam') {
+        return {
+          id: String(g.id),
+          name: g.name,
+          released: g.released || '—',
+          rating: g.rating || 4,
+          genres: g.genres && g.genres.length ? g.genres : ['Steam'],
+          image: g.image || '',
+        };
+      }
+      return g;
+    })
     .filter(g => !seen.has(g.id));
 }
 
