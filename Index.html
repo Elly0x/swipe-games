@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>swipe-games // discovery.log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="crt-noise"></div>
+
+<div class="app">
+
+  <!-- ===== terminal top bar ===== -->
+  <header class="winbar">
+    <div class="winbar__dots">
+      <span class="dot dot--r"></span>
+      <span class="dot dot--y"></span>
+      <span class="dot dot--g"></span>
+    </div>
+    <div class="winbar__title">~/swipe-games <span class="winbar__branch">main</span></div>
+    <div class="winbar__status" id="apiStatus">● connecting…</div>
+  </header>
+
+  <main class="stage">
+
+    <!-- ===== left: swipe deck ===== -->
+    <section class="deck-panel">
+      <div class="deck-header">
+        <p class="prompt-line">
+          <span class="prompt-user">visitor@steam</span><span class="prompt-sep">:</span><span class="prompt-path">~</span><span class="prompt-sep">$</span>
+          <span class="typed" id="deckTitle">fetch --trending games</span><span class="cursor">▌</span>
+        </p>
+        <p class="deck-sub" id="deckCounter">carregando catálogo…</p>
+      </div>
+
+      <div class="deck" id="deck">
+        <div class="deck__empty" id="deckEmpty" hidden>
+          <p>&gt; fila.log vazio</p>
+          <p class="deck__empty-sub">Sem mais jogos no buffer. Reinicie para carregar um novo lote.</p>
+          <button class="btn btn--ghost" id="reloadBtn">reload --batch</button>
+        </div>
+      </div>
+
+      <div class="deck-controls">
+        <button class="ctrl ctrl--pass" id="passBtn" aria-label="Descartar">
+          <span class="ctrl__glyph">✕</span><span class="ctrl__label">pass</span>
+        </button>
+        <button class="ctrl ctrl--info" id="infoBtn" aria-label="Detalhes">
+          <span class="ctrl__glyph">i</span><span class="ctrl__label">info</span>
+        </button>
+        <button class="ctrl ctrl--like" id="likeBtn" aria-label="Adicionar à wishlist">
+          <span class="ctrl__glyph">♥</span><span class="ctrl__label">like</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== right: log + wishlist ===== -->
+    <aside class="side-panel">
+
+      <div class="panel-block">
+        <p class="panel-block__head">wishlist.json <span id="wishCount">[0]</span></p>
+        <div class="wishlist" id="wishlist">
+          <p class="wishlist__empty" id="wishlistEmpty">// nenhum jogo salvo ainda</p>
+        </div>
+      </div>
+
+      <div class="panel-block panel-block--grow">
+        <p class="panel-block__head">activity.log</p>
+        <div class="activity" id="activity"></div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <footer class="footbar">
+    <span>dados via <a href="https://rawg.io/apidocs" target="_blank" rel="noopener">RAWG API</a></span>
+    <span class="footbar__sep">·</span>
+    <span id="modeLabel">modo: catálogo local</span>
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
