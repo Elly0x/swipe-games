@@ -21,18 +21,18 @@ const STORAGE_KEYS = {
 
 /* ---------- catálogo local (fallback, sem precisar de chave) ---------- */
 const FALLBACK_GAMES = [
-  { id: 'f1', name: 'Hollow Knight', released: '2017', rating: 4.5, genres: ['Metroidvania', 'Indie'], image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&q=60' },
-  { id: 'f2', name: 'Hades', released: '2020', rating: 4.7, genres: ['Roguelike', 'Ação'], image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&q=60' },
-  { id: 'f3', name: 'Stardew Valley', released: '2016', rating: 4.6, genres: ['Simulação', 'Indie'], image: 'https://images.unsplash.com/photo-1500322969630-a26ede4133ee?w=600&q=60' },
-  { id: 'f4', name: 'Celeste', released: '2018', rating: 4.5, genres: ['Plataforma', 'Indie'], image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&q=60' },
-  { id: 'f5', name: 'Disco Elysium', released: '2019', rating: 4.6, genres: ['RPG', 'Narrativa'], image: 'https://images.unsplash.com/photo-1519669556878-63bdad8a1a49?w=600&q=60' },
-  { id: 'f6', name: 'Slay the Spire', released: '2019', rating: 4.4, genres: ['Roguelike', 'Cartas'], image: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600&q=60' },
-  { id: 'f7', name: 'Outer Wilds', released: '2019', rating: 4.7, genres: ['Exploração', 'Puzzle'], image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=60' },
-  { id: 'f8', name: 'Vampire Survivors', released: '2022', rating: 4.3, genres: ['Roguelike', 'Ação'], image: 'https://images.unsplash.com/photo-1509587584298-0f3b3a3a1797?w=600&q=60' },
-  { id: 'f9', name: 'Return of the Obra Dinn', released: '2018', rating: 4.5, genres: ['Mistério', 'Puzzle'], image: 'https://images.unsplash.com/photo-1548503572-8479b1e33137?w=600&q=60' },
-  { id: 'f10', name: 'Terraria', released: '2011', rating: 4.6, genres: ['Sandbox', 'Aventura'], image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&q=60' },
-  { id: 'f11', name: 'Undertale', released: '2015', rating: 4.5, genres: ['RPG', 'Indie'], image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&q=60' },
-  { id: 'f12', name: 'Dead Cells', released: '2018', rating: 4.4, genres: ['Roguelike', 'Metroidvania'], image: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=600&q=60' },
+  { id: 'f1', name: 'Hollow Knight', released: '2017', rating: 4.5, genres: ['Metroidvania', 'Indie'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg' },
+  { id: 'f2', name: 'Hades', released: '2020', rating: 4.7, genres: ['Roguelike', 'Ação'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/header.jpg' },
+  { id: 'f3', name: 'Stardew Valley', released: '2016', rating: 4.6, genres: ['Simulação', 'Indie'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg' },
+  { id: 'f4', name: 'Celeste', released: '2018', rating: 4.5, genres: ['Plataforma', 'Indie'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/504230/header.jpg' },
+  { id: 'f5', name: 'Disco Elysium', released: '2019', rating: 4.6, genres: ['RPG', 'Narrativa'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/632470/header.jpg' },
+  { id: 'f6', name: 'Slay the Spire', released: '2019', rating: 4.4, genres: ['Roguelike', 'Cartas'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/646570/header.jpg' },
+  { id: 'f7', name: 'Outer Wilds', released: '2019', rating: 4.7, genres: ['Exploração', 'Puzzle'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/753640/header.jpg' },
+  { id: 'f8', name: 'Vampire Survivors', released: '2022', rating: 4.3, genres: ['Roguelike', 'Ação'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1794680/header.jpg' },
+  { id: 'f9', name: 'Return of the Obra Dinn', released: '2018', rating: 4.5, genres: ['Mistério', 'Puzzle'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/653530/header.jpg' },
+  { id: 'f10', name: 'Terraria', released: '2011', rating: 4.6, genres: ['Sandbox', 'Aventura'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/105600/header.jpg' },
+  { id: 'f11', name: 'Undertale', released: '2015', rating: 4.5, genres: ['RPG', 'Indie'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/391540/header.jpg' },
+  { id: 'f12', name: 'Dead Cells', released: '2018', rating: 4.4, genres: ['Roguelike', 'Metroidvania'], image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/588650/header.jpg' },
 ];
 
 /* ---------- estado ---------- */
